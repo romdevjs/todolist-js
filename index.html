@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TodoList</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/classes.css">
+</head>
+<body>
+<header class="header"></header>
+<section class="content">
+	<div class="content__adding adding">
+		<input class="adding__input" type="text" placeholder="Add todolist">
+		<button class="adding__btn">+</button>
+	</div>
+
+	<ul class="todolists">
+		<li class="todolists__item">
+			<h4 class="todolists__item-title">TodoList1</h4>
+			<div class="todolists__item-adding adding">
+				<input class="adding__input" type="text" placeholder="Add task">
+				<button class="adding__btn">+</button>
+			</div>
+			<ul class="todolists__item-tasks tasks">
+				<li class="tasks__item">
+					<input class="tasks__item-checkbox" type="checkbox">
+					<h4 class="tasks__item-title">Task 1</h4>
+					<button class="tasks__item-btn">x</button>
+				</li>
+			</ul>
+			<div class="todolists__item-buttons">
+				<button class="todolists__item-btn todolists__item-btn_active">active</button>
+				<button class="todolists__item-btn todolists__item-btn_completed">completed</button>
+				<button class="todolists__item-btn">all</button>
+			</div>
+		</li>
+	</ul>
+</section>
+</body>
+</html>
