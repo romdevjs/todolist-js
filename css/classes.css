@@ -1,6 +1,10 @@
 .header {
   height: 80px;
+  width: 100%;
   background: #111;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 .content {
@@ -9,7 +13,13 @@
   align-items: flex-start;
   flex-direction: column;
   gap: 30px;
-  padding: 50px;
+  padding: 180px 0 50px;
+}
+
+.content__adding{
+  position: fixed;
+  top: 100px;
+  left: 50px;
 }
 
 .adding {
@@ -40,11 +50,20 @@
 }
 
 .todolists {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  gap: 30px;
+  height: 600px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 50px;
 
 }
 
 .todolists__item {
   width: 300px;
+  height: 400px;
   display: flex;
   justify-content: start;
   align-items: flex-start;
@@ -54,28 +73,51 @@
   background: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 5px 0 #ddd, 0 -2px 5px 0 #ddd, 2px 0 5px 0 #ddd, -2px 0 5px 0 #ddd;
+  overflow: hidden;
+  position: relative;
 }
 
-.tasks {
-  display: flex;
-  justify-content: start;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.tasks__item {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  gap: 5px;
-}
-
-.todolists__item-buttons {
+.todolists__item-header{
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0;
+  gap: 10px;
+}
+
+.todolists__item-btn_delete{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  color: #000;
+  font-size: 2rem;
+  background: transparent;
+  border-radius: 2px;
+  padding: 0;
+  transition: .3s;
+}
+
+.todolists__item-title{
+  width: 70%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 2rem;
+}
+
+.todolists__item-buttons {
+  width: 280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  margin: 0 auto;
 }
 
 .todolists__item-btn {
@@ -114,5 +156,59 @@
 .todolists__item-btn_completed:hover,
 .todolists__item-btn_completed:focus-visible {
   background: #af041d;
+}
+
+.tasks {
+  width: 100%;
+  height: 210px;
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.tasks__item {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+
+.tasks__item-checkbox{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.tasks__item-title{
+  max-width: 65%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.tasks__item-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 22px;
+  height: 22px;
+  color: #af041d;
+  font-size: 1.8rem;
+  background: transparent;
+  border-radius: 2px;
+  padding: 0;
+  transition: .3s;
+}
+
+.tasks__item-btn:hover,
+.tasks__item-btn:focus-visible{
+  font-size: 2.4rem;
 }
 
