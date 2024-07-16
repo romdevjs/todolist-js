@@ -1,6 +1,8 @@
 const todolist = document.getElementById('todolist')
 const addTodoListInput = document.getElementById('add__todolist-input')
 const addTodoListBtn = document.getElementById('add__todolist-btn')
+const div = getAddingTemplate()
+document.getElementById('content').appendChild(div)
 
 let todoListItems = [
   {
@@ -26,8 +28,26 @@ let todoListItems = [
   }
 ]
 
-function createId() {
-  return Math.ceil(Math.random() * 10e8)
+
+function addTodoList() {
+  const id = `todolist-${createId()}`
+  const title = addTodoListInput.value
+  if (title.length > 0) todoListItems.unshift({id, title, tasks: []})
+  render()
+}
+
+function deleteTodoList(id) {
+  todoListItems = todoListItems.filter(f => f.id !== id)
+  render()
+}
+
+function deleteTask(id, taskID) {
+  const todolist = todoListItems.find(t => t.id === id)
+  console.log(id)
+  const tasks = todolist.tasks.filter(task => task.id !== taskID)
+  console.log(tasks)
+  todoListItems = todoListItems.map(t => t.id !== id ? t : {...t, tasks})
+  render()
 }
 
 function addTask(id, title) {
@@ -43,6 +63,10 @@ function addTask(id, title) {
   }
 }
 
+function createId() {
+  return Math.ceil(Math.random() * 10e8)
+}
+
 function getTaskTemplate(id, task) {
   return (`
     <li class="tasks__item">
@@ -54,17 +78,22 @@ function getTaskTemplate(id, task) {
 }
 
 function getTodoListTemplate(todolist) {
+  let editMode = false
   const taskElements = todolist.tasks.map(task => getTaskTemplate(todolist.id, task)).join('\t')
+  const addingInput = `<input class="adding__input" type="text" placeholder="Add task">`
 
   return (`
   <li id="${todolist.id}" class="todolist__item">
       <div class="todolists__item-header">
-        <h4 class="todolists__item-title">${todolist.title}</h4>
+        ${!editMode
+    ? `<h4 class="todolists__item-title">${todolist.title}</h4>`
+    : `<input type="text"/>`
+  }
         <button onclick=deleteTodoList('${todolist.id}') class="todolists__item-btn_delete">&#10006;</button>
       </div>
       <div class="todolists__item-adding adding">
-        <input class="adding__input" type="text" placeholder="Add task">
-        <button class="adding__btn">+</button>
+        ${addingInput}
+        <button onclick="addTask('${todolist.id}', '${todolist.id}')" class="adding__btn">+</button>
       </div>
       <ul class="todolists__item-tasks tasks">
         ${taskElements}
@@ -84,15 +113,40 @@ function render() {
   todolist.innerHTML = items
 }
 
-function func() {
-  const items = todolist.querySelectorAll('.todolist__item')
-
-  items.forEach(tl => {
-    const addBtn = tl.querySelector('.adding__btn')
-    const addInput = tl.querySelector('.adding__input')
-    addBtn.addEventListener('click', () => addTask(tl.id, addInput.value))
-  })
-}
+addTodoListBtn.addEventListener('click', addTodoList)
 
 render()
-func()
+
+function getAddingTemplate() {
+  const div = document.createElement('div')
+  const input = document.createElement('input')
+  const btn = document.createElement('button')
+
+  let value = 'add'
+
+  function clickHandler(){
+    console.log(value)
+  }
+
+  function changeHandler(e){
+    value = e.currentTarget.value
+    console.log(value)
+  }
+  div.style.position = 'absolute'
+  div.style.top = '200px'
+  div.style.right = '200px'
+  div.className = 'adding'
+  input.className = 'adding__input'
+  btn.className = 'adding__btn'
+
+  btn.innerHTML = '+'
+  input.value = value
+
+  btn.addEventListener('click', clickHandler)
+  input.addEventListener('change', changeHandler)
+
+  div.insertAdjacentElement('afterbegin', input)
+  div.insertAdjacentElement('beforeend', btn)
+
+  return div
+}
