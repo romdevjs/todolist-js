@@ -58,7 +58,17 @@
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0 50px;
+}
 
+.todolist_empty{
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  overflow-x: hidden;
+  font-weight: 700;
+  font-size: 3rem;
+  color: #aaaaaa;
+  padding-top: 200px;
 }
 
 .todolist__item {
@@ -133,7 +143,8 @@
 }
 
 .todolists__item-btn:hover,
-.todolists__item-btn:focus-visible {
+.todolists__item-btn:focus-visible,
+.todolists__item-btn._active{
   background: #111;
   color: #fff;
 }
@@ -144,7 +155,8 @@
 }
 
 .todolists__item-btn_active:hover,
-.todolists__item-btn_active:focus-visible {
+.todolists__item-btn_active:focus-visible,
+.todolists__item-btn_active._active {
   background: #0030cc;
 }
 
@@ -154,7 +166,8 @@
 }
 
 .todolists__item-btn_completed:hover,
-.todolists__item-btn_completed:focus-visible {
+.todolists__item-btn_completed:focus-visible,
+.todolists__item-btn_completed._active {
   background: #af041d;
 }
 
@@ -175,6 +188,11 @@
   justify-content: start;
   align-items: center;
   gap: 5px;
+}
+
+.tasks__item_completed > .tasks__item-title{
+  text-decoration: line-through;
+  color: #aaaaaa;
 }
 
 .tasks__item-checkbox{
@@ -210,5 +228,15 @@
 .tasks__item-btn:hover,
 .tasks__item-btn:focus-visible{
   font-size: 2.4rem;
+}
+
+.empty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  font-weight: 700;
+  color: #aaa;
 }
 
