@@ -1,0 +1,121 @@
+.todolist {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  gap: 30px;
+  height: 600px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 50px;
+}
+
+.todolist_empty{
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  overflow-x: hidden;
+  font-weight: 700;
+  font-size: 3rem;
+  color: #aaaaaa;
+  padding-top: 200px;
+}
+
+.todolist__item {
+  width: 300px;
+  height: 400px;
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px 0 #ddd, 0 -2px 5px 0 #ddd, 2px 0 5px 0 #ddd, -2px 0 5px 0 #ddd;
+  overflow: hidden;
+  position: relative;
+}
+
+.todolists__item-header{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  gap: 10px;
+}
+
+.todolists__item-btn_delete{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  color: #000;
+  font-size: 2rem;
+  background: transparent;
+  border-radius: 2px;
+  padding: 0;
+  transition: .3s;
+}
+
+.todolists__item-title{
+  width: 70%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 2rem;
+}
+
+.todolists__item-buttons {
+  width: 280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  margin: 0 auto;
+}
+
+.todolists__item-btn {
+  width: 32%;
+  height: 40px;
+  border: 2px solid #111;
+  border-radius: 2px;
+  background: transparent;
+  text-transform: uppercase;
+  padding: 0;
+  font-weight: 700;
+  transition: .3s;
+}
+
+.todolists__item-btn:hover,
+.todolists__item-btn:focus-visible,
+.todolists__item-btn._active{
+  background: #111;
+  color: #fff;
+}
+
+.todolists__item-btn_active{
+  border: 2px solid #0030cc;
+  color: #0030cc;
+}
+
+.todolists__item-btn_active:hover,
+.todolists__item-btn_active:focus-visible,
+.todolists__item-btn_active._active {
+  background: #0030cc;
+}
+
+.todolists__item-btn_completed{
+  border: 2px solid #af041d;
+  color: #af041d;
+}
+
+.todolists__item-btn_completed:hover,
+.todolists__item-btn_completed:focus-visible,
+.todolists__item-btn_completed._active {
+  background: #af041d;
+}

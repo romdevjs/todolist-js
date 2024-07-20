@@ -33,7 +33,12 @@ function addTodoList(title) {
 
 function deleteTodoList(id) {
   todoListItems = todoListItems.filter(f => f.id !== id)
-  render(todoListItems)
+  render()
+}
+
+function changeTodolistTitle(id, title) {
+  todoListItems = todoListItems.map(t => t.id !== id ? t : {...t, title})
+  render()
 }
 
 function changeTodoListFilter(id, filter) {
@@ -78,11 +83,20 @@ function changeTaskChecked(id, taskID, checked) {
   render()
 }
 
+function changeTaskTitle(id, taskID, title) {
+  const todolist = todoListItems.find(t => t.id === id)
+  const tasks = todolist.tasks.map(task => task.id !== taskID ? task : {...task, title})
+  todoListItems = todoListItems.map(t => t.id !== id ? t : {...t, tasks})
+  render()
+}
+
 function getTaskTemplate(id, task) {
   return (`
-    <li id="${task.id}" class="tasks__item ${task.checked && 'tasks__item_completed'}">
+    <li id="${task.id}" class="tasks__item ${task.checked ? 'tasks__item_completed' : ''}">
       <input class="tasks__item-checkbox" type="checkbox">
-      <h4 class="tasks__item-title">${task.title}</h4>
+      <div class="edit">
+        <h4 class="edit-title tasks__item-title">${task.title}</h4>
+      </div>
       <button class="tasks__item-btn">&#10006;</button>
     </li>
   `)
@@ -94,7 +108,9 @@ function getTodoListTemplate(todolist) {
   return (`
   <li data-filter="${todolist.filter}" id="${todolist.id}" class="todolist__item">
       <div class="todolists__item-header">
-        <h4 class="todolists__item-title">${todolist.title}</h4>
+      <div class="edit">
+        <h4 class="edit-title todolists__item-title">${todolist.title}</h4>
+      </div>
         <button class="todolists__item-btn_delete">&#10006;</button>
       </div>
       <div class="todolists__item-adding adding">
@@ -114,15 +130,14 @@ function getTodoListTemplate(todolist) {
 }
 
 function render() {
-
-  if(todoListItems.length > 0){
+  if (todoListItems.length > 0) {
     const items = todoListItems
       .map(t => ({...t, tasks: getFilteredTasks(t.filter, t.tasks)}))
       .map(t => getTodoListTemplate(t))
 
     todolistElement.innerHTML = items.join('\t')
     todolistElement.classList.remove('todolist_empty')
-  } else{
+  } else {
     todolistElement.classList.add('todolist_empty')
     todolistElement.innerHTML = 'Empty'
   }
@@ -179,6 +194,16 @@ function addingListeners() {
     const addTaskInput = todolist.querySelector('.adding__input')
     const tasks = todolist.querySelectorAll('.tasks__item')
     const filterButtons = todolist.querySelectorAll('.todolists__item-btn')
+    const editElement = todolist.querySelector('.edit')
+    const editTitle = editElement.querySelector('.edit-title')
+
+    editTitle.addEventListener('dblclick', () => {
+      editElement.innerHTML = `<input type="text" value="${editTitle.innerHTML}" class="edit-input">`
+
+      const input = editElement.querySelector('.edit-input')
+      input.addEventListener('keydown', (e) => keyPressHandler(e, () => changeTodolistTitle(todolist.id, e.currentTarget.value)))
+    })
+
 
     filterButtons.forEach(b => {
       b.addEventListener('click', () => changeTodoListFilter(todolist.id, b.dataset.filter))
@@ -192,11 +217,23 @@ function addingListeners() {
     addTaskInput.addEventListener('keydown', (e) => keyPressHandler(e, () => addTask(todolist.id, addTaskInput.value)))
 
     tasks.forEach(task => {
-      const taskTitle = task.querySelector('.tasks__item-title')
       const taskCheckbox = task.querySelector('.tasks__item-checkbox')
       const taskDeleteBtn = task.querySelector('.tasks__item-btn')
+      const editTaskElement = task.querySelector('.edit')
+      const editTaskTitle = editTaskElement.querySelector('.edit-title')
 
-      taskTitle.addEventListener('dblclick', () => console.log('task title'))
+      editTaskTitle.addEventListener('dblclick', () => {
+        editTaskElement.innerHTML = `<input type="text" value="${editTaskTitle.innerHTML}" class="edit-input">`
+
+
+
+        const input = editTaskElement.querySelector('.edit-input')
+
+        if(input){
+          input.addEventListener('keydown', (e) => keyPressHandler(e, () => changeTaskTitle(todolist.id, task.id, e.currentTarget.value)))
+        }
+      })
+
       taskCheckbox.addEventListener('change', (e) => changeTaskChecked(todolist.id, task.id, e.currentTarget.checked))
       taskDeleteBtn.addEventListener('click', () => deleteTask(todolist.id, task.id))
     })
