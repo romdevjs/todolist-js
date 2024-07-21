@@ -61,32 +61,33 @@ function addTask(id, title) {
     const tl = todoListItems.find(t => t.id === id)
     if (tl) {
       const taskID = `${id}-${createId()}`
-      const tasks = tl.tasks
-      tasks.unshift({id: taskID, title, checked: false})
-      todoListItems = todoListItems.map(t => t.id !== id ? t : {...t, tasks})
+      todoListItems = todoListItems.map(t => t.id !== id
+        ? t
+        : {...t, tasks: [{id: taskID, title, checked: false}, ...t.tasks]}
+      )
       render()
     }
   }
 }
 
 function deleteTask(id, taskID) {
-  const todolist = todoListItems.find(t => t.id === id)
-  const tasks = todolist.tasks.filter(task => task.id !== taskID)
-  todoListItems = todoListItems.map(t => t.id !== id ? t : {...t, tasks})
+  todoListItems = todoListItems.map(t => t.id !== id ? t : {...t, tasks: t.tasks.filter(task => task.id !== taskID)})
   render()
 }
 
 function changeTaskChecked(id, taskID, checked) {
-  const todolist = todoListItems.find(t => t.id === id)
-  const tasks = todolist.tasks.map(task => task.id !== taskID ? task : {...task, checked})
-  todoListItems = todoListItems.map(t => t.id !== id ? t : {...t, tasks})
+  todoListItems = todoListItems.map(t => t.id !== id
+    ? t
+    : {...t, tasks:t.tasks.map(task => task.id !== taskID ? task : {...task, checked})}
+  )
   render()
 }
 
 function changeTaskTitle(id, taskID, title) {
-  const todolist = todoListItems.find(t => t.id === id)
-  const tasks = todolist.tasks.map(task => task.id !== taskID ? task : {...task, title})
-  todoListItems = todoListItems.map(t => t.id !== id ? t : {...t, tasks})
+  todoListItems = todoListItems.map(t => t.id !== id
+    ? t
+    : {...t, tasks:t.tasks.map(task => task.id !== taskID ? task : {...task, title})}
+  )
   render()
 }
 
@@ -226,10 +227,9 @@ function addingListeners() {
         editTaskElement.innerHTML = `<input type="text" value="${editTaskTitle.innerHTML}" class="edit-input">`
 
 
-
         const input = editTaskElement.querySelector('.edit-input')
 
-        if(input){
+        if (input) {
           input.addEventListener('keydown', (e) => keyPressHandler(e, () => changeTaskTitle(todolist.id, task.id, e.currentTarget.value)))
         }
       })
