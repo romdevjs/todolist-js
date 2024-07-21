@@ -1,4 +1,4 @@
-Simple web application - Todolist
+<h1>Simple web application - Todolist</h1>
 
 <h2>Used technologies:</h2>
 
